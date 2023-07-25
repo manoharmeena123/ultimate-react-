@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" class="css" />
+  </head>
+  <body>
+    <div class="container py-5">
+      <h1 class="text-center"> Cipher App</h1>
+      <div id="app-container" class="my-5">
+        <textarea name="" id="text" cols="30" rows="10" class="form-control bg-body-secondary"></textarea>
+        <div class="row justify-content-center mt-3">
+          <div class="col-md-3">
+            <button id="encrypt" class="btn btn-primary w-100">Encrypt</button>
+          </div>
+          <div class="col-md-3">
+            <input id="key" type="text" class="form-control" placeholder="Key">
+          </div>
+          <div class="col-md-3">
+            <button id="decrypt" class="btn btn-primary w-100">Decrypt</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+ const btnEncrypt = document.querySelector("#encrypt");
+const btnDecrypt = document.querySelector("#decrypt");
+const ListOfletters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+let newText = '';
+
+// Encryption================================================================>
+btnEncrypt.addEventListener("click", () => {
+  const textarea = document.querySelector("#text");
+  const key = document.querySelector("#key").value;
+  const keyValue = Number(key);
+  newText = '';
+  
+  for (let letter of textarea.value) {
+    letter = letter.toLowerCase();
+    if (!ListOfletters.includes(letter)) {
+      continue;
+    }
+    const indexletter = ListOfletters.findIndex((item) => item === letter);
+    let indexNewletter = (indexletter + keyValue) % 26;
+    newText += ListOfletters[indexNewletter];
+  }
+  textarea.value = newText;
+});
+
+// Decryption===========================================================>
+btnDecrypt.addEventListener("click", () => {
+  const textarea = document.querySelector("#text");
+  const key = document.querySelector("#key").value;
+  const keyValue = Number(key);
+  newText = '';
+
+  for (let letter of textarea.value) {
+    letter = letter.toLowerCase();
+    if (!ListOfletters.includes(letter)) {
+      continue;
+    }
+    const indexletter = ListOfletters.findIndex((item) => item === letter);
+    let indexNewletter = (indexletter - keyValue + 26) % 26;
+    newText += ListOfletters[indexNewletter];
+  }
+  textarea.value = newText;
+});
+
+</script>

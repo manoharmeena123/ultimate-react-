@@ -1,0 +1,235 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>DES Encryption/Decryption</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>DES Encryption/Decryption</h2>
+    
+    <div class="form-group">
+      <label for="key">Key (64 bits):</label>
+      <input type="text" id="key" class="form-control" placeholder="Enter the key">
+    </div>
+    
+    <div class="form-group">
+      <label for="plaintext">Plaintext (64 bits):</label>
+      <input type="text" id="plaintext" class="form-control" placeholder="Enter the plaintext">
+    </div>
+    
+    <button type="button" class="btn btn-primary" onclick="encrypt()">Encrypt</button>
+    <button type="button" class="btn btn-primary" onclick="decrypt()">Decrypt</button>
+    
+    <div class="mt-4">
+      <h5>Ciphertext:</h5>
+      <textarea id="ciphertext" class="form-control" rows="2" readonly></textarea>
+    </div>
+    
+    <div class="mt-4">
+      <h5>Decrypted Text:</h5>
+      <textarea id="decryptedText" class="form-control" rows="2" readonly></textarea>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // DES encryption function=============================================================>
+    function desEncrypt(key, plaintext) {
+      var keyBinary = hexToBinary(key);
+      var plaintextBinary = hexToBinary(plaintext);
+      var ciphertextBinary = performDESEncryption(keyBinary, plaintextBinary);
+      var ciphertext = binaryToHex(ciphertextBinary);
+      return ciphertext;
+    }
+
+    // DES decryption function=============================================================>
+    function desDecrypt(key, ciphertext) {
+      var keyBinary = hexToBinary(key);
+      var ciphertextBinary = hexToBinary(ciphertext);
+      var plaintextBinary = performDESDecryption(keyBinary, ciphertextBinary);
+      var plaintext = binaryToHex(plaintextBinary);
+      return plaintext;
+    }
+
+    
+    // Helper function to convert hexadecimal to binary=====================================>
+    function hexToBinary(hex) {
+      var binary = "";
+      for (var i = 0; i < hex.length; i++) {
+        binary += parseInt(hex.charAt(i), 16).toString(2).padStart(4, "0");
+      }
+      return binary;
+    }
+
+    // Helper function to convert binary to hexadecimal====================================>
+    function binaryToHex(binary) {
+      var hex = "";
+      for (var i = 0; i < binary.length; i += 4) {
+        var chunk = binary.substr(i, 4);
+        hex += parseInt(chunk, 2).toString(16);
+      }
+      return hex;
+    }
+
+    // DES encryption function=============================================================>
+    function performDESEncryption(key, plaintext) {
+      // Convert the key and plaintext to binary
+      var keyBinary = hexToBinary(key);
+      var plaintextBinary = hexToBinary(plaintext);
+      // Create the 16 round keys
+      var roundKeys = generateRoundKeys(keyBinary);
+      // Encrypt the plaintext using the round keys
+      var ciphertextBinary = plaintextBinary;
+      for (var i = 0; i < 16; i++) {
+        ciphertextBinary = xor(ciphertextBinary, roundKeys[i]);
+      }
+      // Convert the ciphertext back to hexadecimal
+      var ciphertext = binaryToHex(ciphertextBinary);
+      return ciphertext;
+    }
+
+
+    // DES decryption function=============================================================>
+    function performDESDecryption(key, ciphertext) {
+      // Convert the key and ciphertext to binary
+      var keyBinary = hexToBinary(key);
+      var ciphertextBinary = hexToBinary(ciphertext);
+
+      // Create the 16 round keys
+      var roundKeys = generateRoundKeys(keyBinary);
+
+      // Decrypt the ciphertext using the round keys
+      var plaintextBinary = ciphertextBinary;
+      for (var i = 15; i >= 0; i--) {
+        plaintextBinary = xor(plaintextBinary, roundKeys[i]);
+      }
+
+      // Convert the plaintext back to hexadecimal
+      var plaintext = binaryToHex(plaintextBinary);
+      return plaintext;
+    }
+
+
+    // Helper function to generate the 16 round keys=======================================>
+    function generateRoundKeys(keyBinary) {
+      var roundKeys = [];
+      for (var i = 0; i < 16; i++) {
+        var roundKey = keyBinary.slice(i * 64, (i + 1) * 64);
+        roundKeys.push(roundKey);
+      }
+      return roundKeys;
+    }
+
+
+    // Helper function to perform XOR operation on two binary strings=======================>
+    function xor(binary1, binary2) {
+      var result = "";
+      for (var i = 0; i < binary1.length; i++) {
+        result += (binary1.charAt(i) ^ binary2.charAt(i));
+      }
+      return result;
+    }
+
+
+    // Encrypt button click event handler===================================================>
+    function encrypt() {
+      var key = document.getElementById("key").value;
+      var plaintext = document.getElementById("plaintext").value;
+      if (key.length !== 16 || plaintext.length !== 16) {
+        alert("Key and plaintext must be 64 bits (16 hexadecimal characters)!");
+        return;
+      }
+
+      var ciphertext = desEncrypt(key, plaintext);
+      document.getElementById("ciphertext").value = ciphertext;
+    }
+
+
+    // Decrypt button click event handler====================================================>
+    function decrypt() {
+      var key = document.getElementById("key").value;
+      var ciphertext = document.getElementById("ciphertext").value;
+
+      if (key.length !== 16 || ciphertext.length !== 16) {
+        alert("Key and ciphertext must be 64 bits (16 hexadecimal characters)!");
+        return;
+      }
+
+      var decryptedText = desDecrypt(key, ciphertext);
+      document.getElementById("decryptedText").value = decryptedText;
+    }
+  </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DES Encryption and Decryption</title>
+  <script>
+    // Helper functions
+    const chunkString = (str, len) => str.match(new RegExp('.{1,' + len + '}', 'g'));
+    const hexToBin = (hex) => ("00000000" + (parseInt(hex, 16)).toString(2)).substr(-8);
+    const decToBin = (dec) => ("0000" + (parseInt(dec, 10)).toString(2)).substr(-4);
+    const binToHex = (bin) => parseInt(bin, 2).toString(16);
+    const bin = key => chunkString(key, 2).map(hex => hexToBin(hex)).join("");
+    const shiftString = (str, shift) => str.slice(shift, str.length) + str.slice(0, shift);
+
+    // DES encryption function
+    const encode = (msg, key) => {
+      // DES implementation code (keySchedule, expandBlock, stringXOR, sBoxOutput, des)
+      // ...
+
+      // Dummy encryption implementation
+      return "ENCRYPTED";
+    };
+
+    // DES decryption function
+    const decode = (msg, key) => {
+      // DES implementation code (keySchedule, expandBlock, stringXOR, sBoxOutput, des)
+      // ...
+
+      // Dummy decryption implementation
+      return "DECRYPTED";
+    };
+
+    // Encryption function
+    const encrypt = () => {
+      let message = document.getElementById('message').value;
+      let key = document.getElementById('key').value;
+      let encrypted = encode(bin(message), bin(key));
+      document.getElementById('encrypted').value = encrypted;
+    };
+
+    // Decryption function
+    const decrypt = () => {
+      let encrypted = document.getElementById('encrypted').value;
+      let key = document.getElementById('key').value;
+      let decrypted = decode(bin(encrypted), bin(key));
+      document.getElementById('decrypted').value = decrypted;
+    };
+  </script>
+</head>
+<body>
+  <h1>DES Encryption and Decryption</h1>
+  <label for="message">Message:</label>
+  <input type="text" id="message" placeholder="Enter the message">
+
+  <label for="key">Key:</label>
+  <input type="text" id="key" placeholder="Enter the key">
+
+  <button onclick="encrypt()">Encrypt</button>
+  <button onclick="decrypt()">Decrypt</button>
+
+  <br><br>
+
+  <label for="encrypted">Encrypted:</label>
+  <input type="text" id="encrypted" readonly>
+
+  <label for="decrypted">Decrypted:</label>
+  <input type="text" id="decrypted" readonly>
+</body>
+</html>

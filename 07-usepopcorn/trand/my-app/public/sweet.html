@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+    <style>
+        /* Custom styles for SweetAlert */
+        .swal2-popup {
+            font-size: 14px;
+        }
+        .swal2-title {
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="myButton">Click Me</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+    <script>
+        document.getElementById('myButton').addEventListener('click', function () {
+            Swal.fire({
+                title: 'SweetAlert Example',
+                text: 'Hello, SweetAlert!',
+                icon: 'success',
+                position: 'top-end', // Position the popup in the top right corner
+                toast: true, // Display it as a toast notification
+                showConfirmButton: false, // Hide the confirm button
+                timer: 3000 // Automatically close after 3 seconds
+            });
+        });
+    </script>
+</body>
+
+</html>
